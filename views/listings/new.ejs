@@ -1,0 +1,100 @@
+<!-- new.ejs -->
+
+<% layout("/layouts/boilerplate") -%>
+   
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h2>Create new Listings</h2>
+            <form id="listingForm" method="POST" action="/listings" novalidate enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="listing[title]" id="title" placeholder="Add a title" type="text" class="form-control" required/>
+                    <div class="invalid-feedback">Please fill in this field.</div>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" id="description" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please fill in this field.</div>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                </div>
+                <div class="form-group">
+                    <label for="image" class="form-label"> Upload Image</label>
+                    <input name="listing[image]" id="image"  type="file"  class="form-control"/>
+                    required
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="listing[price]" id="price" placeholder="1200" type="number" class="form-control" required/>
+                        <div class="invalid-feedback">Please fill in this field.</div>
+                        <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="country" class="form-label">Country</label>
+                        <input name="listing[country]" id="country" placeholder="India" type="text" class="form-control" required/>
+                        <div class="invalid-feedback">Please fill in this field.</div>
+                        <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="location" class="form-label">Location</label>
+                    <input name="listing[location]" id="location" placeholder="Kolkata" class="form-control" required/>
+                    <div class="invalid-feedback">Please fill in this field.</div>
+                    <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                </div>
+                
+                <button id="submitButton" type="submit" class="btn btn-dark add-btn mt-3">Add details</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript for custom validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('listingForm');
+        const submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', function(event) {
+            // Check if the form is valid
+            if (!form.checkValidity()) {
+                event.preventDefault(); // Prevent form submission
+                event.stopPropagation(); // Stop event propagation
+            }
+
+            // Add 'was-validated' class to enable Bootstrap's styling for invalid fields
+            form.classList.add('was-validated');
+
+            // Check each input for validity and display warning if empty
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            inputs.forEach(function(input) {
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+        });
+
+        // Reset validation status when inputs change
+        form.addEventListener('input', function() {
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            inputs.forEach(function(input) {
+                input.classList.remove('is-invalid');
+            });
+        });
+    });
+</script>
